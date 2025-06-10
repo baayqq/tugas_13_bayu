@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tugas_13_bayu/main/login.dart';
+import 'package:tugas_13_bayu/main/tambah.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
       ),
-      home: LoginPage(),
+      home: AddProduct(),
     );
   }
 }

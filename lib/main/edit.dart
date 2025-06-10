@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:tugas_13_bayu/database/dbHelper.dart';
 import 'package:tugas_13_bayu/model/modelFile.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class EditPage extends StatefulWidget {
+  const EditPage({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<EditPage> createState() => _EditPageState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _EditPageState extends State<EditPage> {
   final TextEditingController productController = TextEditingController();
   final TextEditingController hargaController = TextEditingController();
   final TextEditingController descController = TextEditingController();
@@ -53,35 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Shoes Store',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        backgroundColor: Colors.cyanAccent,
-        centerTitle: true,
-      ),
-      body: Expanded(
-        child: ListView.builder(
-          itemCount: daftarProduct.length,
-          itemBuilder: (context, index) {
-            final Product = daftarProduct[index];
-            return Card(
-              child: ListTile(
-                onTap: () {},
-                leading: CircleAvatar(child: Text('${index + 1}')),
-                title: Text(Product.product),
-                subtitle: Text(
-                  'Film: ${Product.harga}\nTiket: ${Product.deskripsi}\nWaktu: ${Product.gambar}',
-                ),
-              ),
-            );
-          },
-        ),
-      ),
-    );
+    return Scaffold();
   }
 }
