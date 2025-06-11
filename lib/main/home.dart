@@ -1,85 +1,80 @@
 import 'package:flutter/material.dart';
-import 'package:tugas_13_bayu/database/dbHelper.dart';
-import 'package:tugas_13_bayu/model/modelFile.dart';
+import 'package:tugas_13_bayu/main/edit.dart';
+import 'package:tugas_13_bayu/main/listproduct.dart';
+import 'package:tugas_13_bayu/main/tambah.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class HomePage extends StatefulWidget {
+  final String title;
+  const HomePage({super.key, this.title = 'Home'});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<HomePage> createState() => _DrawpageState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  final TextEditingController productController = TextEditingController();
-  final TextEditingController hargaController = TextEditingController();
-  final TextEditingController descController = TextEditingController();
-  final TextEditingController gambarController = TextEditingController();
-
-  List<Product> daftarProduct = [];
-
-  @override
-  void initState() {
-    super.initState();
-    muatData();
-  }
-
-  Future<void> muatData() async {
-    final data = await Dbhelper.getallProduct();
-    setState(() {
-      daftarProduct = data;
-    });
-  }
-
-  Future<void> simpanData() async {
-    final product = productController.text;
-    final harga = int.tryParse(hargaController.text) ?? 0;
-    final desc = descController.text;
-    final gambar = gambarController.text;
-
-    if (product.isNotEmpty && harga > 0) {
-      await Dbhelper.insertProduct(
-        Product(
-          product: product,
-          harga: harga,
-          deskripsi: desc,
-          gambar: gambar,
-        ),
-      );
-      productController.clear();
-      hargaController.clear();
-      descController.clear();
-      gambarController.clear();
-      muatData();
-    }
-  }
+class _DrawpageState extends State<HomePage> {
+  int _selectedIndex = 0;
+  List<Widget> listScreen = [ListProd(), AddProduct(), EditPage()];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Shoes Store',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          widget.title,
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 32),
         ),
-        backgroundColor: Colors.cyanAccent,
         centerTitle: true,
+        backgroundColor: Colors.tealAccent,
       ),
-      body: Expanded(
-        child: ListView.builder(
-          itemCount: daftarProduct.length,
-          itemBuilder: (context, index) {
-            final Product = daftarProduct[index];
-            return Card(
-              child: ListTile(
-                onTap: () {},
-                leading: CircleAvatar(child: Text('${index + 1}')),
-                title: Text(Product.product),
-                subtitle: Text(
-                  'Film: ${Product.harga}\nTiket: ${Product.deskripsi}\nWaktu: ${Product.gambar}',
-                ),
+      body: listScreen[_selectedIndex],
+      drawer: Drawer(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              SizedBox(height: 40),
+              CircleAvatar(
+                radius: 60,
+                backgroundImage: AssetImage("assets/images/sepatu3.jpg"),
               ),
-            );
-          },
+              SizedBox(height: 20),
+              Text(
+                "Bayu",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+              ),
+              SizedBox(height: 30),
+              ListTile(
+                leading: Icon(Icons.check_box),
+                title: Text('home'),
+                onTap: () {
+                  setState(() {
+                    _selectedIndex = 0;
+                  });
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.dark_mode_outlined),
+                title: Text('tambah'),
+                onTap: () {
+                  setState(() {
+                    _selectedIndex = 1;
+                  });
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.list_sharp),
+                title: Text('edit'),
+                onTap: () {
+                  setState(() {
+                    _selectedIndex = 2;
+                  });
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

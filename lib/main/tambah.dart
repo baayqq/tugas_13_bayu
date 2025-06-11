@@ -1,22 +1,25 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart'; // Tambahkan ini
+import 'package:path_provider/path_provider.dart';
 import 'package:tugas_13_bayu/database/dbHelper.dart';
-import 'package:tugas_13_bayu/main/home.dart';
-import 'package:tugas_13_bayu/model/fungsi.dart';
+import 'package:tugas_13_bayu/main/listproduct.dart';
 import 'package:tugas_13_bayu/model/modelFile.dart';
 
 class AddProduct extends StatefulWidget {
-  const AddProduct({super.key});
+  final String title;
+  const AddProduct({super.key, this.title = 'Add'});
 
   @override
   State<AddProduct> createState() => _AddProductState();
 }
 
 class _AddProductState extends State<AddProduct> {
-  // final ControlAll controlAll = ControlAll();
   final TextEditingController productController = TextEditingController();
   final TextEditingController hargaController = TextEditingController();
   final TextEditingController descController = TextEditingController();
-  final TextEditingController gambarController = TextEditingController();
+
+  File? _pickedImage; // Ganti TextField untuk gambar
 
   List<Product> daftarProduct = [];
 
@@ -33,13 +36,30 @@ class _AddProductState extends State<AddProduct> {
     });
   }
 
+  Future<void> _pickImage() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 50, // Kompres gambar, makin kecil makin hemat memori
+    );
+
+    if (pickedFile != null) {
+      setState(() {
+        _pickedImage = File(pickedFile.path);
+      });
+    }
+  }
+
   Future<void> simpanData() async {
     final product = productController.text;
     final harga = int.tryParse(hargaController.text) ?? 0;
     final desc = descController.text;
-    final gambar = gambarController.text;
+    final gambar = _pickedImage?.path ?? ''; // simpan path gambar
 
-    if (product.isNotEmpty && harga > 0) {
+    if (product.isNotEmpty &&
+        harga > 0 &&
+        gambar.isNotEmpty &&
+        File(gambar).existsSync()) {
       await Dbhelper.insertProduct(
         Product(
           product: product,
@@ -51,7 +71,9 @@ class _AddProductState extends State<AddProduct> {
       productController.clear();
       hargaController.clear();
       descController.clear();
-      gambarController.clear();
+      setState(() {
+        _pickedImage = null;
+      });
       muatData();
     }
   }
@@ -59,81 +81,80 @@ class _AddProductState extends State<AddProduct> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Tambah Product'),
-        backgroundColor: Colors.blue,
-        centerTitle: true,
-      ),
-      body: Column(
-        children: [
-          SizedBox(height: 8),
-          TextField(
-            controller: productController,
-            decoration: InputDecoration(
-              hintText: 'Nama',
-              filled: true,
-              fillColor: Color(0xFFE6F0EA),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: BorderSide(color: Color(0xff789262), width: 1),
-              ),
+      
+      body: SingleChildScrollView(
+        padding: EdgeInsets.all(12),
+        child: Column(
+          children: [
+            TextField(
+              controller: productController,
+              decoration: inputDecoration('Nama'),
             ),
-          ),
-          SizedBox(height: 8),
-          TextField(
-            controller: hargaController,
-            decoration: InputDecoration(
-              hintText: 'Harga',
-              filled: true,
-              fillColor: Color(0xFFE6F0EA),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: BorderSide(color: Color(0xff789262), width: 1),
-              ),
+            SizedBox(height: 8),
+            TextField(
+              controller: hargaController,
+              decoration: inputDecoration('Harga'),
+              keyboardType: TextInputType.number,
             ),
-          ),
-          SizedBox(height: 8),
-          TextField(
-            controller: descController,
-            decoration: InputDecoration(
-              hintText: 'Deskripsi',
-              filled: true,
-              fillColor: Color(0xFFE6F0EA),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: BorderSide(color: Color(0xff789262), width: 1),
-              ),
+            SizedBox(height: 8),
+            TextField(
+              controller: descController,
+              decoration: inputDecoration('Deskripsi'),
             ),
-          ),
-          SizedBox(height: 8),
-          TextField(
-            controller: gambarController,
-            decoration: InputDecoration(
-              hintText: 'Upload Gambar Product',
-              filled: true,
-              fillColor: Color(0xFFE6F0EA),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: BorderSide(color: Color(0xff789262), width: 1),
-              ),
-            ),
-          ),
-          SizedBox(height: 8),
-          ElevatedButton(onPressed: simpanData, child: Text('Simpan')),
+            SizedBox(height: 8),
 
-          ElevatedButton(
-            onPressed: () async {
-              await Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => HomeScreen()),
-              );
-              setState(() {
-                muatData();
-              });
-            },
-            child: Text('pindah'),
-          ),
-        ],
+            // Upload Gambar Button
+            Row(
+              children: [
+                ElevatedButton.icon(
+                  onPressed: _pickImage,
+                  icon: Icon(Icons.image),
+                  label: Text('Pilih Gambar'),
+                ),
+                SizedBox(width: 12),
+                if (_pickedImage != null)
+                  Container(
+                    width: 100,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      border: Border.all(),
+                      image: DecorationImage(
+                        image: FileImage(_pickedImage!),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+
+            SizedBox(height: 16),
+            ElevatedButton(onPressed: simpanData, child: Text('Simpan')),
+            ElevatedButton(
+              onPressed: () async {
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ListProd()),
+                );
+                setState(() {
+                  muatData();
+                });
+              },
+              child: Text('Pindah'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  InputDecoration inputDecoration(String hint) {
+    return InputDecoration(
+      hintText: hint,
+      filled: true,
+      fillColor: Color(0xFFE6F0EA),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: BorderSide(color: Color(0xff789262), width: 1),
       ),
     );
   }
