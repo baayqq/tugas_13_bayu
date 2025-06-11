@@ -5,6 +5,7 @@ import 'package:tugas_13_bayu/main/edit.dart';
 import 'package:tugas_13_bayu/main/tambah.dart';
 import 'package:tugas_13_bayu/model/modelFile.dart';
 import 'dart:io';
+import 'package:intl/intl.dart';
 
 class ListProd extends StatefulWidget {
   final String title;
@@ -15,14 +16,17 @@ class ListProd extends StatefulWidget {
 }
 
 class _ListProdState extends State<ListProd> {
+  final currencyFormat = NumberFormat.currency(
+    locale: 'id_ID', // kode lokal Indonesia
+    symbol: 'Rp', // simbol Rupiah
+    decimalDigits: 0, // tanpa angka di belakang koma
+  );
   final TextEditingController productController = TextEditingController();
   final TextEditingController hargaController = TextEditingController();
   final TextEditingController descController = TextEditingController();
   final TextEditingController gambarController = TextEditingController();
 
   List<Product> daftarProduct = [];
-
-  
 
   @override
   void initState() {
@@ -59,11 +63,11 @@ class _ListProdState extends State<ListProd> {
       muatData();
     }
   }
-  
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFFF1F8E9),
       body: GridView.builder(
         padding: EdgeInsets.all(8),
         itemCount: daftarProduct.length,
@@ -94,7 +98,7 @@ class _ListProdState extends State<ListProd> {
                             ? Image.file(
                               File(product.gambar),
                               width: double.infinity,
-                              height: 160,
+                              height: 128,
                               fit: BoxFit.cover,
                             )
                             : Container(
@@ -111,7 +115,7 @@ class _ListProdState extends State<ListProd> {
                     overflow: TextOverflow.ellipsis,
                   ),
                   SizedBox(height: 4),
-                  Text('Harga: ${product.harga}'),
+                  Text('Harga: ${currencyFormat.format(product.harga ?? 0)}'),
                   SizedBox(height: 4),
                   Text(
                     product.deskripsi,

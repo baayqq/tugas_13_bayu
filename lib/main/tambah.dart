@@ -81,7 +81,7 @@ class _AddProductState extends State<AddProduct> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
+      backgroundColor: Color(0xFFF1F8E9),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(12),
         child: Column(
@@ -104,43 +104,29 @@ class _AddProductState extends State<AddProduct> {
             SizedBox(height: 8),
 
             // Upload Gambar Button
-            Row(
+            Column(
               children: [
-                ElevatedButton.icon(
-                  onPressed: _pickImage,
-                  icon: Icon(Icons.image),
-                  label: Text('Pilih Gambar'),
-                ),
-                SizedBox(width: 12),
-                if (_pickedImage != null)
-                  Container(
-                    width: 100,
-                    height: 100,
+                GestureDetector(
+                  onTap: _pickImage,
+                  child: Container(
+                    width: 200,
+                    height: 200,
                     decoration: BoxDecoration(
                       border: Border.all(),
-                      image: DecorationImage(
-                        image: FileImage(_pickedImage!),
-                        fit: BoxFit.cover,
-                      ),
+                      color: Colors.grey[300],
                     ),
+                    child:
+                        _pickedImage != null
+                            ? Image.file(_pickedImage!, fit: BoxFit.cover)
+                            : Icon(Icons.image_outlined, size: 40),
                   ),
+                ),
+                Text('masukan gambar'),
               ],
             ),
 
-            SizedBox(height: 16),
+            SizedBox(height: 20),
             ElevatedButton(onPressed: simpanData, child: Text('Simpan')),
-            ElevatedButton(
-              onPressed: () async {
-                await Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ListProd()),
-                );
-                setState(() {
-                  muatData();
-                });
-              },
-              child: Text('Pindah'),
-            ),
           ],
         ),
       ),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart'; // ✅ Tambahkan
-import 'package:tugas_13_bayu/main/home.dart';
 import 'package:tugas_13_bayu/main/navBotom.dart';
 import 'package:tugas_13_bayu/main/register.dart';
 
@@ -12,8 +11,10 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final TextEditingController _emailController = TextEditingController(); // ✅ Tambahkan
-  final TextEditingController _passwordController = TextEditingController(); // ✅ Tambahkan
+  final TextEditingController _emailController =
+      TextEditingController(); // ✅ Tambahkan
+  final TextEditingController _passwordController =
+      TextEditingController(); // ✅ Tambahkan
   final _formKey = GlobalKey<FormState>(); // ✅ Tambahkan
 
   // Fungsi untuk memvalidasi login
@@ -35,9 +36,9 @@ class _LoginPageState extends State<LoginPage> {
       );
     } else {
       // Gagal login
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Email atau Password salah')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Email atau Password salah')));
     }
   }
 
@@ -47,9 +48,9 @@ class _LoginPageState extends State<LoginPage> {
       appBar: AppBar(
         title: Text('Login'),
         centerTitle: true,
-        backgroundColor: Colors.grey,
+        backgroundColor: Colors.greenAccent,
       ),
-      backgroundColor: Colors.blueGrey,
+      backgroundColor: Color(0xFFF1F8E9),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -70,8 +71,11 @@ class _LoginPageState extends State<LoginPage> {
                     borderRadius: BorderRadius.circular(16),
                   ),
                 ),
-                validator: (value) =>
-                    value == null || value.isEmpty ? 'Email wajib diisi' : null,
+                validator:
+                    (value) =>
+                        value == null || value.isEmpty
+                            ? 'Email wajib diisi'
+                            : null,
               ),
 
               SizedBox(height: 8),
@@ -88,8 +92,11 @@ class _LoginPageState extends State<LoginPage> {
                     borderRadius: BorderRadius.circular(16),
                   ),
                 ),
-                validator: (value) =>
-                    value == null || value.isEmpty ? 'Password wajib diisi' : null,
+                validator:
+                    (value) =>
+                        value == null || value.isEmpty
+                            ? 'Password wajib diisi'
+                            : null,
               ),
 
               SizedBox(height: 16),
@@ -110,8 +117,10 @@ class _LoginPageState extends State<LoginPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Belum punya akun?",
-                      style: TextStyle(fontSize: 14, color: Color(0xff888888))),
+                  Text(
+                    "Belum punya akun?",
+                    style: TextStyle(fontSize: 14, color: Color(0xff888888)),
+                  ),
                   TextButton(
                     onPressed: () {
                       Navigator.pushReplacement(

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tugas_13_bayu/main/home.dart';
 import 'package:tugas_13_bayu/main/edit.dart';
 import 'package:tugas_13_bayu/main/listproduct.dart';
 import 'package:tugas_13_bayu/main/login.dart';

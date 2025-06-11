@@ -3,6 +3,7 @@ import 'package:tugas_13_bayu/database/dbHelper.dart';
 import 'package:tugas_13_bayu/model/modelFile.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 
 class EditPage extends StatefulWidget {
   final String title;
@@ -13,6 +14,11 @@ class EditPage extends StatefulWidget {
 }
 
 class _EditPageState extends State<EditPage> {
+  final currencyFormat = NumberFormat.currency(
+    locale: 'id_ID', // kode lokal Indonesia
+    symbol: 'Rp', // simbol Rupiah
+    decimalDigits: 0, // tanpa angka di belakang koma
+  );
   final TextEditingController productController = TextEditingController();
   final TextEditingController hargaController = TextEditingController();
   final TextEditingController descController = TextEditingController();
@@ -49,6 +55,7 @@ class _EditPageState extends State<EditPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFFF1F8E9),
       body: GridView.builder(
         padding: EdgeInsets.all(8),
         itemCount: daftarProduct.length,
@@ -56,7 +63,7 @@ class _EditPageState extends State<EditPage> {
           crossAxisCount: 2,
           mainAxisSpacing: 8,
           crossAxisSpacing: 8,
-          childAspectRatio: 0.75,
+          childAspectRatio: 0.70,
         ),
         itemBuilder: (context, index) {
           final product = daftarProduct[index];
@@ -96,7 +103,8 @@ class _EditPageState extends State<EditPage> {
                     overflow: TextOverflow.ellipsis,
                   ),
                   SizedBox(height: 4),
-                  Text('Harga: ${product.harga}'),
+                  Text('Harga: ${currencyFormat.format(product.harga ?? 0)}'),
+
                   SizedBox(height: 4),
                   Text(
                     product.deskripsi,
@@ -109,7 +117,7 @@ class _EditPageState extends State<EditPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       IconButton(
-                        icon: Icon(Icons.edit, color: Colors.blue),
+                        icon: Icon(Icons.edit),
                         onPressed: () {
                           // Isi semua controller sebelum edit
                           productController.text = product.product;
@@ -194,7 +202,7 @@ class _EditPageState extends State<EditPage> {
                         },
                       ),
                       IconButton(
-                        icon: Icon(Icons.delete, color: Colors.red),
+                        icon: Icon(Icons.delete),
                         onPressed: () async {
                           await Dbhelper.deleteProduct(product.id!);
                           muatData();
