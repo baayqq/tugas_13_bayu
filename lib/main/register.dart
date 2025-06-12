@@ -12,28 +12,28 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  // Key form untuk validasi
+  
   final _formKey = GlobalKey<FormState>();
 
-  // Controller untuk mengambil input user
+  
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  // Fungsi untuk menyimpan data ke SharedPreferences
+  
   Future<void> _simpanData() async {
     await PrefRenDB.saveUser(
   username: _usernameController.text,
   email: _emailController.text,
   password: _passwordController.text,
-); // simpan password (tidak aman untuk produksi)
+); 
 
-    // Tampilkan pesan sukses
+    
     ScaffoldMessenger.of(
       context,
     ).showSnackBar(SnackBar(content: Text('Data berhasil disimpan!')));
 
-    // Navigasi ke halaman login
+    
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (_) => LoginPage()),
@@ -50,7 +50,7 @@ class _RegisterPageState extends State<RegisterPage> {
       ),
       backgroundColor: Color(0xFFF1F8E9),
       body: Form(
-        key: _formKey, // pasang key untuk validasi form
+        key: _formKey, 
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -119,11 +119,11 @@ class _RegisterPageState extends State<RegisterPage> {
 
               SizedBox(height: 16),
 
-              // Tombol daftar
+              
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    // Validasi form dan simpan data
+                    
                     _simpanData();
                   }
                 },
@@ -132,7 +132,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
               SizedBox(height: 24),
 
-              // Navigasi ke halaman login jika sudah punya akun
+              
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

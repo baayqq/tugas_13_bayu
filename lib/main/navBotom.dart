@@ -7,6 +7,7 @@ import 'package:tugas_13_bayu/main/report.dart';
 import 'package:tugas_13_bayu/main/tambah.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:stroke_text/stroke_text.dart';
 
 class HomeBottom extends StatefulWidget {
   const HomeBottom({super.key});
@@ -29,16 +30,16 @@ class _HomeBottomState extends State<HomeBottom> {
       _pilihIndex = index;
     });
   }
-   String _username = '';
+
+  String _username = '';
   String _email = '';
 
   @override
   void initState() {
     super.initState();
-    _loadUserData(); // Panggil fungsi untuk ambil data
+    _loadUserData();
   }
 
-  // Fungsi untuk mengambil data dari SharedPreferences
   Future<void> _loadUserData() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
@@ -51,7 +52,13 @@ class _HomeBottomState extends State<HomeBottom> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('ntc Store', style: TextStyle(color: Color(0xFFF1F8E9))),
+        // title: Text('ntc Store', style: TextStyle(color: Color(0xFFF1F8E9))),
+        title: StrokeText(
+          text: "Ntc Store",
+          textStyle: TextStyle(fontSize: 50, color: Color(0xFFF1F8E9)),
+          strokeColor: Colors.black12,
+          strokeWidth: 5,
+        ),
         backgroundColor: Colors.greenAccent,
         centerTitle: true,
       ),
@@ -82,10 +89,10 @@ class _HomeBottomState extends State<HomeBottom> {
                 leading: Icon(Icons.manage_accounts),
                 title: Text('Profile'),
                 onTap: () {
-                   Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => AccountPage()),
-      );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AccountPage()),
+                  );
                 },
               ),
               SizedBox(height: 8),

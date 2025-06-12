@@ -42,6 +42,7 @@ class _ReportPageState extends State<ReportPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFFF1F8E9),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

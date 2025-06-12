@@ -72,12 +72,12 @@ class _ListProdState extends State<ListProd> {
         padding: EdgeInsets.all(8),
         itemCount: daftarProduct.length,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2, // 2 kolom
+          crossAxisCount: 2, 
           mainAxisSpacing: 8,
           crossAxisSpacing: 8,
-          childAspectRatio: 0.75, // Tinggi vs lebar (atur sesuai kebutuhan)
+          childAspectRatio: 0.75, 
         ),
-        itemBuilder: (context, index) {
+        itemBuilder: (context, index) { 
           final product = daftarProduct[index];
           final gambarAda =
               product.gambar.isNotEmpty && File(product.gambar).existsSync();
