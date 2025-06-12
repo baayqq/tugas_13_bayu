@@ -54,59 +54,67 @@ class _HomeBottomState extends State<HomeBottom> {
       appBar: AppBar(
         // title: Text('ntc Store', style: TextStyle(color: Color(0xFFF1F8E9))),
         title: StrokeText(
-          text: "Ntc Store",
-          textStyle: TextStyle(fontSize: 50, color: Color(0xFFF1F8E9)),
+          text: "Footwear Store",
+          textStyle: TextStyle(fontSize: 36, color: Color(0xFFF1F8E9)),
           strokeColor: Colors.black12,
-          strokeWidth: 5,
+          strokeWidth: 7,
         ),
         backgroundColor: Colors.greenAccent,
         centerTitle: true,
       ),
       drawer: Drawer(
         elevation: 4,
-        backgroundColor: Color(0xFFF1F8E9),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              SizedBox(height: 40),
-              CircleAvatar(
-                backgroundColor: Colors.greenAccent,
-                radius: 60,
-                child: Icon(
-                  Icons.account_circle,
-                  size: 100,
-                  color: Color(0xFFF1F8E9),
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [Color(0xFFF1F8E9), Colors.greenAccent],
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                SizedBox(height: 40),
+                CircleAvatar(
+                  backgroundColor: Color(0xFFF1F8E9),
+                  radius: 60,
+                  child: Icon(
+                    Icons.account_circle,
+                    size: 120,
+                    color: Colors.black54,
+                  ),
                 ),
-              ),
-              SizedBox(height: 20),
-              Text(
-                "$_username",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-              ),
-              SizedBox(height: 30),
-              ListTile(
-                leading: Icon(Icons.manage_accounts),
-                title: Text('Profile'),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => AccountPage()),
-                  );
-                },
-              ),
-              SizedBox(height: 8),
-              ListTile(
-                leading: Icon(Icons.exit_to_app),
-                title: Text('Logout'),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => LoginPage()),
-                  );
-                },
-              ),
-            ],
+                SizedBox(height: 20),
+                Text(
+                  "$_username",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+                ),
+                SizedBox(height: 30),
+                ListTile(
+                  leading: Icon(Icons.manage_accounts),
+                  title: Text('Profile'),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => AccountPage()),
+                    );
+                  },
+                ),
+                SizedBox(height: 8),
+                ListTile(
+                  leading: Icon(Icons.exit_to_app),
+                  title: Text('Logout'),
+                  onTap: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => LoginPage()),
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),
