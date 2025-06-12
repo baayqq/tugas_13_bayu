@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:tugas_13_bayu/main/edit.dart';
 import 'package:tugas_13_bayu/main/listproduct.dart';
 import 'package:tugas_13_bayu/main/login.dart';
+import 'package:tugas_13_bayu/main/profil.dart';
 import 'package:tugas_13_bayu/main/report.dart';
 import 'package:tugas_13_bayu/main/tambah.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeBottom extends StatefulWidget {
   const HomeBottom({super.key});
@@ -25,6 +27,23 @@ class _HomeBottomState extends State<HomeBottom> {
   void _pilihNavigator(int index) {
     setState(() {
       _pilihIndex = index;
+    });
+  }
+   String _username = '';
+  String _email = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData(); // Panggil fungsi untuk ambil data
+  }
+
+  // Fungsi untuk mengambil data dari SharedPreferences
+  Future<void> _loadUserData() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _username = prefs.getString('username') ?? 'Tidak diketahui';
+      _email = prefs.getString('email') ?? 'Tidak diketahui';
     });
   }
 
@@ -55,7 +74,7 @@ class _HomeBottomState extends State<HomeBottom> {
               ),
               SizedBox(height: 20),
               Text(
-                "Bayu",
+                "$_username",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
               ),
               SizedBox(height: 30),
@@ -63,8 +82,10 @@ class _HomeBottomState extends State<HomeBottom> {
                 leading: Icon(Icons.manage_accounts),
                 title: Text('Profile'),
                 onTap: () {
-                  setState(() {});
-                  Navigator.pop(context);
+                   Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => AccountPage()),
+      );
                 },
               ),
               SizedBox(height: 8),
