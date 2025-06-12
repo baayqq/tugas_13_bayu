@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 // Import SharedPreferences untuk menyimpan data secara lokal
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tugas_13_bayu/main/login.dart';
+import 'package:tugas_13_bayu/database/prefrendb.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -21,16 +22,11 @@ class _RegisterPageState extends State<RegisterPage> {
 
   // Fungsi untuk menyimpan data ke SharedPreferences
   Future<void> _simpanData() async {
-    final prefs =
-        await SharedPreferences.getInstance(); // akses SharedPreferences
-
-    // Simpan data ke penyimpanan lokal
-    await prefs.setString('username', _usernameController.text);
-    await prefs.setString('email', _emailController.text);
-    await prefs.setString(
-      'password',
-      _passwordController.text,
-    ); // simpan password (tidak aman untuk produksi)
+    await PrefRenDB.saveUser(
+  username: _usernameController.text,
+  email: _emailController.text,
+  password: _passwordController.text,
+); // simpan password (tidak aman untuk produksi)
 
     // Tampilkan pesan sukses
     ScaffoldMessenger.of(

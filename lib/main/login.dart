@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart'; // ✅ Tambahkan
 import 'package:tugas_13_bayu/main/navBotom.dart';
 import 'package:tugas_13_bayu/main/register.dart';
+import 'package:tugas_13_bayu/database/prefrendb.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -11,11 +12,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final TextEditingController _emailController =
-      TextEditingController(); // ✅ Tambahkan
-  final TextEditingController _passwordController =
-      TextEditingController(); // ✅ Tambahkan
-  final _formKey = GlobalKey<FormState>(); // ✅ Tambahkan
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   // Fungsi untuk memvalidasi login
   Future<void> _login() async {
@@ -27,13 +26,14 @@ class _LoginPageState extends State<LoginPage> {
     final inputEmail = _emailController.text;
     final inputPassword = _passwordController.text;
 
-    // ✅ Cek apakah email & password cocok
+    
     if (inputEmail == savedEmail && inputPassword == savedPassword) {
-      // Berhasil login
+      
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => HomeBottom()),
       );
+      
     } else {
       // Gagal login
       ScaffoldMessenger.of(
@@ -54,13 +54,13 @@ class _LoginPageState extends State<LoginPage> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
-          key: _formKey, // ✅ Tambahkan key untuk validasi form
+          key: _formKey, 
           child: Column(
             children: [
               Text('Silakan login terlebih dahulu'),
               SizedBox(height: 40),
 
-              // ✅ Input Email
+             
               TextFormField(
                 controller: _emailController,
                 decoration: InputDecoration(
@@ -105,7 +105,7 @@ class _LoginPageState extends State<LoginPage> {
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    _login(); // jalankan validasi login
+                    _login(); 
                   }
                 },
                 child: Text('Login'),
