@@ -54,8 +54,8 @@ class _HomeBottomState extends State<HomeBottom> {
       appBar: AppBar(
         title: StrokeText(
           text: "Footwear Store",
-          textStyle: TextStyle(fontSize: 36, color: Color(0xFFF1F8E9)),
-          strokeColor: Colors.black12,
+          textStyle: TextStyle(fontSize: 36, color: Colors.black),
+          strokeColor: (Color(0xFFF1F8E9)),
           strokeWidth: 4,
         ),
         backgroundColor: Colors.greenAccent,
@@ -87,7 +87,7 @@ class _HomeBottomState extends State<HomeBottom> {
                 ),
                 SizedBox(height: 20),
                 Text(
-                  "$_username",
+                  "Welcome $_username",
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
                 ),
                 SizedBox(height: 30),

@@ -83,62 +83,65 @@ class _AddProductState extends State<AddProduct> {
     return Scaffold(
       backgroundColor: Color(0xFFF1F8E9),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(12),
-        child: Column(
-          children: [
-            TextField(
-              controller: productController,
-              decoration: inputDecoration('Nama'),
-            ),
-            SizedBox(height: 8),
-            TextField(
-              controller: hargaController,
-              decoration: inputDecoration('Harga'),
-              keyboardType: TextInputType.number,
-            ),
-            SizedBox(height: 8),
-            TextField(
-              controller: descController,
-              decoration: inputDecoration('Deskripsi'),
-            ),
-            SizedBox(height: 8),
+        // padding: EdgeInsets.all(12),
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            children: [
+              TextField(
+                controller: productController,
+                decoration: inputDecoration('Nama'),
+              ),
+              SizedBox(height: 20),
+              TextField(
+                controller: hargaController,
+                decoration: inputDecoration('Harga'),
+                keyboardType: TextInputType.number,
+              ),
+              SizedBox(height: 20),
+              TextField(
+                controller: descController,
+                decoration: inputDecoration('Deskripsi'),
+              ),
+              SizedBox(height: 20),
 
-            // Upload Gambar Button
-            Column(
-              children: [
-                GestureDetector(
-                  onTap: _pickImage,
-                  child: Container(
-                    width: 200,
-                    height: 200,
-                    decoration: BoxDecoration(
-                      border: Border.all(),
-                      color: Colors.grey[300],
+              // Upload Gambar Button
+              Column(
+                children: [
+                  GestureDetector(
+                    onTap: _pickImage,
+                    child: Container(
+                      width: 200,
+                      height: 200,
+                      decoration: BoxDecoration(
+                        border: Border.all(),
+                        color: Colors.grey[300],
+                      ),
+                      child:
+                          _pickedImage != null
+                              ? Image.file(_pickedImage!, fit: BoxFit.cover)
+                              : Icon(Icons.image_outlined, size: 40),
                     ),
-                    child:
-                        _pickedImage != null
-                            ? Image.file(_pickedImage!, fit: BoxFit.cover)
-                            : Icon(Icons.image_outlined, size: 40),
                   ),
-                ),
-                Text('masukan gambar'),
-              ],
-            ),
+                  Text('masukan gambar'),
+                ],
+              ),
 
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                simpanData();
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text("Berhasil menambahkan produk produk"),
-                    backgroundColor: Colors.teal,
-                  ),
-                );
-              },
-              child: Text('Simpan'),
-            ),
-          ],
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  simpanData();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text("Berhasil menambahkan produk produk"),
+                      backgroundColor: Colors.teal,
+                    ),
+                  );
+                },
+                child: Text('Simpan'),
+              ),
+            ],
+          ),
         ),
       ),
     );

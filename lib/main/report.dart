@@ -22,7 +22,7 @@ class _ReportPageState extends State<ReportPage> {
     decimalDigits: 0,
   );
 
-  @override
+  @override 
   void initState() {
     super.initState();
     ambilData();
