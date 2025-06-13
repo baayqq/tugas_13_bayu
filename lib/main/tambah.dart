@@ -126,7 +126,18 @@ class _AddProductState extends State<AddProduct> {
             ),
 
             SizedBox(height: 20),
-            ElevatedButton(onPressed: simpanData, child: Text('Simpan')),
+            ElevatedButton(
+              onPressed: () {
+                simpanData();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text("Berhasil menambahkan produk produk"),
+                    backgroundColor: Colors.teal,
+                  ),
+                );
+              },
+              child: Text('Simpan'),
+            ),
           ],
         ),
       ),

@@ -193,6 +193,16 @@ class _EditPageState extends State<EditPage> {
                                         );
                                         Navigator.pop(context);
                                         muatData();
+                                        ScaffoldMessenger.of(
+                                              context,
+                                            ).showSnackBar(
+                                              SnackBar(
+                                                content: Text(
+                                                  "Berhasil Edit Product",
+                                                ),
+                                                backgroundColor: Colors.teal,
+                                              ),
+                                            );
                                       },
                                       child: Text('Simpan'),
                                     ),
@@ -204,8 +214,44 @@ class _EditPageState extends State<EditPage> {
                       IconButton(
                         icon: Icon(Icons.delete),
                         onPressed: () async {
-                          await Dbhelper.deleteProduct(product.id!);
-                          muatData();
+                          showDialog(
+                            context: context,
+                            builder:
+                                (context) => AlertDialog(
+                                  title: Text(
+                                    'Apakah anda yakin ingin\nmembatalkan pesanan?',
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text("Batal"),
+                                    ),
+
+                                    TextButton(
+                                      onPressed: () async {
+                                        await Dbhelper.deleteProduct(
+                                          product.id!,
+                                        );
+                                        muatData();
+                                        Navigator.pop(context);
+                                        ScaffoldMessenger.of(
+                                          context,
+                                        ).showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                              "Berhasil Melakukan Pembatalan",
+                                            ),
+                                            backgroundColor: Colors.redAccent,
+                                          ),
+                                        );
+                                      },
+                                      child: Text("Lanjut"),
+                                    ),
+                                  ],
+                                ),
+                          );
                         },
                       ),
                     ],

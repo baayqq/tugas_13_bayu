@@ -52,12 +52,11 @@ class _HomeBottomState extends State<HomeBottom> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // title: Text('ntc Store', style: TextStyle(color: Color(0xFFF1F8E9))),
         title: StrokeText(
           text: "Footwear Store",
           textStyle: TextStyle(fontSize: 36, color: Color(0xFFF1F8E9)),
           strokeColor: Colors.black12,
-          strokeWidth: 7,
+          strokeWidth: 4,
         ),
         backgroundColor: Colors.greenAccent,
         centerTitle: true,

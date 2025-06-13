@@ -81,7 +81,7 @@ class _LoginPageState extends State<LoginPage> {
 
               SizedBox(height: 8),
 
-              // ✅ Input Password
+              
               TextFormField(
                 controller: _passwordController,
                 obscureText: true,
@@ -102,7 +102,7 @@ class _LoginPageState extends State<LoginPage> {
 
               SizedBox(height: 16),
 
-              // ✅ Tombol Login
+              
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
@@ -114,7 +114,7 @@ class _LoginPageState extends State<LoginPage> {
 
               SizedBox(height: 24),
 
-              // ✅ Navigasi ke Register
+              
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
